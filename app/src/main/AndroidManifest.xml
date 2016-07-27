@@ -20,13 +20,16 @@
         <activity
             android:name=".Activities.BlacknWhiteHome"
             android:label="Home"
-            android:theme="@style/BlacknWhiteTheme" />
+            android:theme="@style/BlacknWhiteTheme"
+            android:screenOrientation="portrait"/>
         <activity
-            android:name=".Activities.Reservations"
+            android:name=".Activities.Selections"
             android:theme="@style/Theme.AppCompat.Light.Dialog"
-            android:label="@string/select"/>
+            android:label="@string/select"
+            android:screenOrientation="portrait"/>
         <activity android:name=".Activities.Availables"
-            android:theme="@style/BlacknWhiteTheme"></activity>
+            android:theme="@style/BlacknWhiteTheme"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

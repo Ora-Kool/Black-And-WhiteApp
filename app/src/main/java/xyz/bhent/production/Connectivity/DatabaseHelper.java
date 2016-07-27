@@ -16,14 +16,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "blacknwhite.db";
     public static final String DATABASE_TABLE_NAME = "reservations";
     public static final String RESERVATION_COLUMN_ID = "id";
-    public static final String RESERVATION_ITEM = "items";
+    public static final String RESERVATION_ITEM_NAME = "items";
+    public static final String RESERVATION_ITEM_QUANTITY = "quantity";
     public static final String RESERVATION_ITEM_PRICE = "price";
     private static final String SELECT_ALL = "select * from "+DATABASE_TABLE_NAME;
 
     private static final String CREATE =
             "create table "+DATABASE_TABLE_NAME+"("+RESERVATION_COLUMN_ID+
-                    " integer primary key, "+RESERVATION_ITEM+
-                    " text, "+RESERVATION_ITEM_PRICE+" text)";
+                    " integer primary key, "+RESERVATION_ITEM_NAME+
+                    " text, "+RESERVATION_ITEM_QUANTITY+" text, "+RESERVATION_ITEM_PRICE+ " text)";
 
     private HashMap<String, String> hashMap;
 
@@ -42,11 +43,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     //INSERTING DATA INTO THE DATABASE
-    public boolean insertItems(String item, String price){
+    public boolean insertItems(String itemName, String itemQuantity, String itemPrice){
         SQLiteDatabase writableDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(RESERVATION_ITEM, item);
-        contentValues.put(RESERVATION_ITEM_PRICE, price);
+        contentValues.put(RESERVATION_ITEM_NAME, itemName);
+        contentValues.put(RESERVATION_ITEM_QUANTITY, itemQuantity);
+        contentValues.put(RESERVATION_ITEM_PRICE, itemPrice);
 
         writableDatabase.insert(DATABASE_TABLE_NAME, null, contentValues);
 
@@ -59,9 +61,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase readableDatabase = this.getReadableDatabase();
         Cursor cursor = readableDatabase.rawQuery(SELECT_ALL, null);
         cursor.moveToFirst();
+        String itemName;
+        String price;
+        String quantity;
         while (cursor.isAfterLast() == false){
-            hashMap.put(cursor.getString(cursor.getColumnIndex(RESERVATION_ITEM_PRICE)),
-                    cursor.getString(cursor.getColumnIndex(RESERVATION_ITEM)));
+
+
+            hashMap.put(cursor.getString(cursor.getColumnIndex(RESERVATION_ITEM_NAME))+" = "+
+                    cursor.getString(cursor.getColumnIndex(RESERVATION_ITEM_QUANTITY)),
+                    cursor.getString(cursor.getColumnIndex(RESERVATION_ITEM_PRICE)));
+
             cursor.moveToNext();
         }
 
@@ -70,8 +79,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     //REMOVING A SELECTED ITEM
     public boolean removeItem(String itemName){
-        SQLiteDatabase writabeDatabase = this.getWritableDatabase();
-        writabeDatabase.delete(DATABASE_TABLE_NAME, RESERVATION_ITEM+" = ? ", new String[]{itemName});
+        SQLiteDatabase writeDatabase = this.getWritableDatabase();
+        writeDatabase.delete(DATABASE_TABLE_NAME, RESERVATION_ITEM_NAME+" = ? ", new String[]{itemName});
         return true;
     }
 }

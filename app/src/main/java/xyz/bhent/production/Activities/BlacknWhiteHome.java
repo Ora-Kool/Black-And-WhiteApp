@@ -21,6 +21,7 @@ import xyz.bhent.production.adapters.HomeMenuAdapter;
 public class BlacknWhiteHome extends AppCompatActivity{
     HomeMenuAdapter adapter;
     ListView listView;
+    private ItemModel model;
     private ArrayList<ItemModel> itemModels = new ArrayList<>();
 
     @Override
@@ -62,7 +63,7 @@ public class BlacknWhiteHome extends AppCompatActivity{
 
     }
     public void setMenuData(){
-        for (int i = 0; i < 11; i++){
+        for (int i = 1; i < 4; i++){
             final ItemModel model = new ItemModel();
             model.setTitle("Volka "+i);
             model.setPrice("25000" + i);

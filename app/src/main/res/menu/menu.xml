@@ -10,9 +10,15 @@
         <!--app:showAsAction="never"/>-->
 
     <item
-        android:id="@+id/makereservations"
+        android:id="@+id/active"
         android:orderInCategory="100"
         android:title="checkout"
-        android:icon="@drawable/reserved"
+        android:icon="@drawable/active"
         app:showAsAction="always"/>
+    <item
+        android:id="@+id/other"
+        android:orderInCategory="100"
+        android:title=""
+        app:showAsAction="always"/>
+
 </menu>
