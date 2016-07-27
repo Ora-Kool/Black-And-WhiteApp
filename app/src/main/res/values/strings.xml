@@ -9,4 +9,6 @@
     <string name="next">Next</string>
     <string name="skip">Skip</string>
     <string name="start">GOT IT</string>
+    <string name="add_to_card">Add</string>
+    <string name="select">Make Selection</string>
 </resources>

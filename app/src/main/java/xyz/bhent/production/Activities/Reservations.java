@@ -22,8 +22,8 @@ public class Reservations extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
 
         Button test = (Button)findViewById(R.id.button);
-        TextView header = (TextView)findViewById(R.id.header_text);
-        header.setText(bundle.getString("Menu of"+"selectedItem"));
+        TextView header = (TextView)findViewById(R.id.selected_item);
+        header.setText(bundle.getString("selectedItem"));
         test.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -34,7 +34,9 @@ public class Reservations extends AppCompatActivity {
                 finish();
             }
         });
-
+ if(getSupportActionBar() != null){
+     getSupportActionBar().setTitle(bundle.getString("selectedItem"));
+ }
 
 
     }

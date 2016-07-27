@@ -24,7 +24,7 @@
         <activity
             android:name=".Activities.Reservations"
             android:theme="@style/Theme.AppCompat.Light.Dialog"
-            android:label="QUANTITY"/>
+            android:label="@string/select"/>
         <activity android:name=".Activities.Availables"
             android:theme="@style/BlacknWhiteTheme"></activity>
     </application>
