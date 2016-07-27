@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">BlacknWhite</string>
+
+    <string name="slide_one_name">Home View</string>
+    <string name="slide_one_description">Description here...</string>
+
+    <string name="slide_two_name">Reservation View</string>
+    <string name="slide_two_description">Description here...</string>
+    <string name="next">Next</string>
+    <string name="skip">Skip</string>
+    <string name="start">GOT IT</string>
+</resources>

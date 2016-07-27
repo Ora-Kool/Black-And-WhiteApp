@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#000000</color>
+    <color name="colorPrimaryDark">#1a1a1a</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="text_color">#ffffff</color>
+
+    <!-- Screens background color-->
+    <color name="bg_screen1">#ffffff</color>
+    <color name="bg_screen2">#20d2bb</color>
+    <color name="bg_screen3">#3395ff</color>
+
+
+
+    <!-- dots inactive colors -->
+
+    <color name="dot_dark_screen1">#f0edf2</color>
+    <color name="dot_dark_screen2">#f0edf2</color>
+    <color name="dot_dark_screen3">#f0edf2</color>
+
+
+    <!-- dots active colors -->
+    <color name="dot_light_screen1">#000000</color>
+    <color name="dot_light_screen2">#000000</color>
+    <color name="dot_light_screen3">#000000</color>
+
+
+    <array name="array_dot_active">
+        <item>@color/dot_light_screen1</item>
+        <item>@color/dot_light_screen2</item>
+        <item>@color/dot_light_screen3</item>
+
+    </array>
+
+    <array name="array_dot_inactive">
+        <item>@color/dot_dark_screen1</item>
+        <item>@color/dot_dark_screen2</item>
+        <item>@color/dot_dark_screen3</item>
+
+    </array>
+
+    <color name="button_pressed">#ff8a00</color>
+    <color name="button_focused">#ff8a00</color>
+    <color name="button_default">#1c76bb</color>
+
+
+
+</resources>
