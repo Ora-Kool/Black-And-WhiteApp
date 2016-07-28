@@ -3,15 +3,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="center"
     tools:context="xyz.bhent.production.Activities.Availables">
+    <LinearLayout
+        android:id="@+id/notify"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:text="done!"
+            android:id="@+id/confirmed"
+            android:gravity="center_horizontal"
+            android:textColor="#008000"
+            android:textSize="25sp"
+            android:layout_marginTop="1dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+
+    </LinearLayout>
 
     <ListView
         android:id="@+id/available"
+        android:layout_below="@id/notify"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:divider="#000000"
         android:drawSelectorOnTop="false"
-        android:listSelector="@drawable/list_selector"
         android:dividerHeight="1dp"/>
 
 </RelativeLayout>

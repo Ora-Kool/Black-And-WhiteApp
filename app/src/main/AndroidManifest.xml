@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="xyz.bhent.production">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -18,18 +18,23 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activities.BlacknWhiteHome"
+            android:name=".Activities.Drinks"
             android:label="Home"
-            android:theme="@style/BlacknWhiteTheme"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Activities.Selections"
-            android:theme="@style/Theme.AppCompat.Light.Dialog"
             android:label="@string/select"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".Activities.Availables"
-            android:theme="@style/BlacknWhiteTheme"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.Dialog" />
+        <activity
+            android:name=".Activities.Availables"
+            android:screenOrientation="portrait"
+            android:theme="@style/BlacknWhiteTheme" />
+        <activity
+            android:name=".Activities.Home"
+            android:screenOrientation="portrait"
+            android:theme="@style/BlacknWhiteTheme" />
+        <activity android:name=".Activities.Food"></activity>
     </application>
 
 </manifest>

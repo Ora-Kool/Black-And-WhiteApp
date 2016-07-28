@@ -1,13 +1,26 @@
 package xyz.bhent.production.Activities;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -28,6 +41,12 @@ public class Availables extends AppCompatActivity {
     private InfosRetrieving retrieving;
     private static int  REQUEST_CODE = 0001;
     private ItemModel model;
+    private LinearLayout notification;
+    private Animation animation;
+    private TextView comTextView;
+    private String confirmation = "";
+
+    private ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +55,13 @@ public class Availables extends AppCompatActivity {
         databaseHelper = new DatabaseHelper(this); //getting an instant of the database helper
         itemModels = new ArrayList<>();
         model = new ItemModel();
+        notification = (LinearLayout)findViewById(R.id.notify);
+        comTextView = (TextView)findViewById(R.id.confirmed);
+        notification.setVisibility(View.GONE);
+
+        overridePendingTransition(R.anim.slide_left_to_right, R.anim.slide_right_to_left);
+
+        Bundle bundle  = getIntent().getExtras();
 
         retrieving = new InfosRetrieving(this); //instant of where we post, retrieve information
         // using volley library
@@ -60,7 +86,7 @@ public class Availables extends AppCompatActivity {
                 getSupportActionBar().setDisplayShowHomeEnabled(true);
                 getSupportActionBar().setDisplayUseLogoEnabled(true);
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                getSupportActionBar().setTitle("Availables");
+                getSupportActionBar().setTitle(bundle.getString("category").toUpperCase());
 
         }
     }
@@ -91,11 +117,84 @@ public class Availables extends AppCompatActivity {
                 //check if there is any item from the database
                 if(map.isEmpty()){
                     Toast.makeText(Availables.this, "Oops! Cart Is Empty", Toast.LENGTH_LONG).show();
+                    notification.setVisibility(View.VISIBLE);
+                    comTextView.setText("Empty Cart!");
+                    notification.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            notification.setVisibility(View.GONE);
+
+                        }
+                    }, 3000);
                 }else {
                     for (Map.Entry<String, String> entry : map.entrySet()) {
                         Toast.makeText(Availables.this, "The Items is " + entry.getKey() + " / the price is " + entry.getValue(), Toast.LENGTH_SHORT).show();
                     }
                 }
+                break;
+            case R.id.delete:
+                //here i will handle the reservation process and resetting the database
+                //need a means to let the user know what to do, pop dialog, alert-dialog
+                Map<String, String> check = databaseHelper.getAllItems();
+                if(check.isEmpty()){
+                    notification.setVisibility(View.VISIBLE);
+                    comTextView.setText("Empty Cart");
+                    notification.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            notification.setVisibility(View.GONE);
+                        }
+                    }, 5000);
+                }else {
+                    final AlertDialog.Builder confirmReservations = new AlertDialog.Builder(Availables.this, R.style.BWAlertDialogTheme);
+
+                    //setting the title
+                    confirmReservations.setTitle("Confirm Reservation...");
+
+                    //setting the message
+                    confirmReservations.setMessage("Do you want to make reservation?");
+
+                    //setting the icon
+                    confirmReservations.setIcon(R.mipmap.ic_launcher);
+
+                    //setting the positive response "Yes"
+                    confirmReservations.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+//                            progressDialog = new ProgressDialog(Availables.this, android.R.style.Theme_Translucent);
+//
+//                            progressDialog.setMessage("Reservation in progress. please wait....");
+//
+//                            progressDialog.show();
+//
+//                            Handler handler = new Handler();
+//                            handler.postDelayed(new Runnable() {
+//                                @Override
+//                                public void run() {
+//                                    progressDialog.cancel();
+//                                }
+//                            },5000);
+                            ItemModel temp = new ItemModel();
+                            temp.setTitle("Fanta Cola");
+                            temp.setPrice("200000");
+                            retrieving.POST_DATA(temp);
+                        }
+                    });
+
+                    //setting the negative response "No"
+                    confirmReservations.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+
+                    //show the alert to the user
+                    AlertDialog dialog = confirmReservations.create();
+                    dialog.show();
+
+                }
+                break;
 
         }
 
@@ -138,11 +237,25 @@ public class Availables extends AppCompatActivity {
         try {
             //first checking if the request code  is same as what was sent
             if (requestCode == REQUEST_CODE) {
-                String confirmation = data.getStringExtra("From Reservation");
+                 confirmation = data.getStringExtra("add");
                 if(confirmation.isEmpty()){
 
                 }else{
+                    notification.setVisibility(View.VISIBLE);
+                    comTextView.setText(confirmation);
+                    notification.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            //notification.setVisibility(View.GONE);
+                            animation = AnimationUtils.loadAnimation(Availables.this, android.R.anim.fade_in);
+                            animation.setDuration(500);
+                            notification.setAnimation(animation);
+                            notification.setVisibility(View.GONE);
+                        }
+                    }, 5000);
+
                 Toast.makeText(Availables.this, confirmation, Toast.LENGTH_LONG).show();
+                    //notification.setVisibility(View.GONE);
                 }
             } else {
 

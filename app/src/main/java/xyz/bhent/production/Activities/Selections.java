@@ -26,9 +26,9 @@ import xyz.bhent.production.R;
 public class Selections extends AppCompatActivity {
 
     private static int  REQUEST_CODE = 0001;
-    private  CheckBox halfCheckBox, oneCheckBox, twoCheckBox, threeCheckBox;
-    private  TextView halfBottle, oneBottle, twoBottles, threeBottles;
-    private  TextView halfPrice, onePrice, twoPrice, threePrice;
+    private  CheckBox halfCheckBox, oneCheckBox, twoCheckBox;
+    private  TextView halfBottle, oneBottle, twoBottles;
+    private  TextView halfPrice, onePrice, twoPrice;
     private HashMap<String, String> selected = new HashMap<>();
     private boolean state;
     private String selectedDrink = "";
@@ -49,21 +49,18 @@ public class Selections extends AppCompatActivity {
         halfCheckBox = (CheckBox)findViewById(R.id.half_checked);
         oneCheckBox = (CheckBox)findViewById(R.id.one_checked);
         twoCheckBox = (CheckBox)findViewById(R.id.two_checked);
-        threeCheckBox = (CheckBox)findViewById(R.id.three_checked);
         //end
 
         //TextView for quantity  UI ---> Java binding
         halfBottle = (TextView)findViewById(R.id.half_bottle);
         oneBottle = (TextView)findViewById(R.id.one_bottle);
         twoBottles = (TextView)findViewById(R.id.two_bottles);
-        threeBottles = (TextView)findViewById(R.id.three_bottles);
         //end
 
         //TextView for price UI ---> Java binding
         halfPrice = (TextView)findViewById(R.id.half_price);
         onePrice = (TextView)findViewById(R.id.one_price);
         twoPrice = (TextView)findViewById(R.id.two_price);
-        threePrice = (TextView)findViewById(R.id.three_price);
         //end
 
 
@@ -89,11 +86,6 @@ public class Selections extends AppCompatActivity {
                     String price = twoPrice.getText().toString();
                     selected.put(quantity, price);
                 }
-                if(threeCheckBox.isChecked()){
-                    String quantity = threeBottles.getText().toString();
-                    String price = threePrice.getText().toString();
-                    selected.put(quantity, price);
-                }
 
                 //check if the list is empty
                 if(selected.isEmpty()){
@@ -106,17 +98,18 @@ public class Selections extends AppCompatActivity {
                     }
 
                     if(state == true){
-                        Toast.makeText(Selections.this, "Thanks ", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent();
+                        intent.putExtra("add", "Cart Active!");
+                        setResult(REQUEST_CODE, intent);
+                        finish();
+
                     }else{
                         Toast.makeText(Selections.this, "Error inserting", Toast.LENGTH_SHORT).show();
                     }
                 }
 
                 selected.clear();
-                halfCheckBox.setChecked(false);
-                oneCheckBox.setChecked(false);
-                twoCheckBox.setChecked(false);
-                threeCheckBox.setChecked(false);
+
 
 
 

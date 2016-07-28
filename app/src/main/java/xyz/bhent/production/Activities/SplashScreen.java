@@ -115,12 +115,13 @@ public class SplashScreen extends AppCompatActivity{
             dots[currentPage].setTextColor(colorsActive[currentPage]);
     }
 
+    //handling different views positions
     private int getItem(int i) {
         return viewPager.getCurrentItem() + i;
     }
     private void launchHomeScreen(){
         preManager.setFirstLaunch(false);
-        startActivity(new Intent(SplashScreen.this, BlacknWhiteHome.class));
+        startActivity(new Intent(SplashScreen.this, Home.class));
         finish();
     }
 

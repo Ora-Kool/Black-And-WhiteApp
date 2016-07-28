@@ -12,13 +12,12 @@
     <item
         android:id="@+id/active"
         android:orderInCategory="100"
-        android:title="checkout"
-        android:icon="@drawable/active"
+        android:title="items"
         app:showAsAction="always"/>
     <item
-        android:id="@+id/other"
+        android:id="@+id/delete"
         android:orderInCategory="100"
-        android:title=""
+        android:title="checkout"
         app:showAsAction="always"/>
 
 </menu>

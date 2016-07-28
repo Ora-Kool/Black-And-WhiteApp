@@ -29,23 +29,30 @@ public class InfosRetrieving {
     private static Context context;
     private static String str_request = "string_req";
     private static ProgressDialog progressDialog;
-    private static String RESERVATION_URL = "http://villagecare.netne.net/reservation.php";
+    private static String RESERVATION_URL = "http://villagecare.netne.net/reservation.php";//posting reservation data
+    private static String CONFIRMATION_RESPONSE = "";
+
+    private static String DATARETRIVAL_URL = "";// link to retrieve information from the database
+
     public InfosRetrieving(Context mContext){
         this.context = mContext;
     }
     public static void POST_DATA(final ItemModel itemModel){
-        progressDialog = new ProgressDialog(context);
+        progressDialog = new ProgressDialog(context, android.R.style.Theme_Translucent);
         progressDialog.setMessage("Making Reservations... Please wait!");
+        progressDialog.setCancelable(false);
         progressDialog.show();
                 StringRequest stringRequest = new StringRequest(Method.POST, RESERVATION_URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        if(response.contains("Thanks")){
-                            Toast.makeText(context, "RESERVATION CONFIRMED!!!", Toast.LENGTH_SHORT).show();
+                        if(response.contains("SUCCESS")){
+                            Toast.makeText(context, "RESERVATION CONFIRMED!!!", Toast.LENGTH_LONG).show();
+                        }else{
+                            Toast.makeText(context, "ERROR!! PLEASE TRY AGAIN", Toast.LENGTH_LONG).show();
                         }
                         Log.d("response", response.toString());
-                        progressDialog.hide();
+                        progressDialog.dismiss();
                     }
                 },
                 new Response.ErrorListener() {
@@ -53,7 +60,7 @@ public class InfosRetrieving {
                     public void onErrorResponse(VolleyError error) {
                         Toast.makeText(context, "message "+error.toString(), Toast.LENGTH_LONG).show();
                         VolleyLog.d("InfoRet", "Error: " + error.getMessage());
-                        progressDialog.hide();
+                        progressDialog.dismiss();
                     }
                 }
         ){

@@ -5,9 +5,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by root on 7/26/16.
@@ -51,7 +53,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(RESERVATION_ITEM_PRICE, itemPrice);
 
         writableDatabase.insert(DATABASE_TABLE_NAME, null, contentValues);
-
+        writableDatabase.close();
         return true;
     }
 
@@ -61,9 +63,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase readableDatabase = this.getReadableDatabase();
         Cursor cursor = readableDatabase.rawQuery(SELECT_ALL, null);
         cursor.moveToFirst();
-        String itemName;
-        String price;
-        String quantity;
         while (cursor.isAfterLast() == false){
 
 
@@ -81,6 +80,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public boolean removeItem(String itemName){
         SQLiteDatabase writeDatabase = this.getWritableDatabase();
         writeDatabase.delete(DATABASE_TABLE_NAME, RESERVATION_ITEM_NAME+" = ? ", new String[]{itemName});
+        writeDatabase.close();
+        return true;
+    }
+
+    public boolean deleteAllRecord(){
+        SQLiteDatabase database = this.getWritableDatabase();
+        Map<String, String>map = getAllItems();
+        for(Map.Entry<String, String> deletingEntry : map.entrySet()){
+            Log.d("deleting", deletingEntry.getKey()+":"+deletingEntry.getValue());
+        }
+        database.execSQL("delete from "+ DATABASE_TABLE_NAME);
         return true;
     }
 }

@@ -16,11 +16,19 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="android:windowActionBar">true</item>
-
-
     </style>
 
+    <!--progress dialog style -->
+<style name="BWAlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+    <!--buttons colors-->
+    <item name="colorAccent">@color/bg_screen1</item>
 
+    <!--title and message color -->
+    <item name="android:textColorPrimary">@android:color/white</item>
+
+    <!-- dialog background -->
+    <item name="android:windowBackground">@drawable/alertdialog_style</item>
+</style>
 
     <style name="ActionBar" parent="@android:style/Widget.ActionBar">
         <item name="android:titleTextStyle">@style/ActionBar.Title</item>
