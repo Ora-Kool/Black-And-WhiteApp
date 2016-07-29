@@ -1,27 +1,35 @@
 package xyz.bhent.production.Activities;
 
+import android.app.ActionBar;
+import android.app.Activity;
 import android.app.TabActivity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.view.animation.Animation;
 import android.widget.TabHost;
+import android.widget.TabHost.TabSpec;
+import android.widget.Toast;
 
 import xyz.bhent.production.R;
 
-public class Home extends TabActivity{
+public class Home extends TabActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
-        TabHost tabHost = getTabHost();
-        overridePendingTransition(R.anim.slide_left_to_right, R.anim.slide_right_to_left);
+
+        final TabHost tabHost = getTabHost();
+        overridePendingTransition(R.anim.slide_left_to_right, Animation.REVERSE);
 
         //Tab for Drinks
-        TabHost.TabSpec drinks = tabHost.newTabSpec("Drinks");
+        TabHost.TabSpec drinks = tabHost.newTabSpec("Drinks").setIndicator("Drinks", getResources().getDrawable(R.drawable.drinksselector));
 
         //setting title and Icon for the tab
-        drinks.setIndicator("Drinks", getResources().getDrawable(R.drawable.wine));
+        //drinks.setIndicator("Drinks", getResources().getDrawable(R.drawable.drinksselector));
         Intent drinkActivity = new Intent(Home.this, Drinks.class);
         drinks.setContent(drinkActivity);
 
@@ -37,5 +45,6 @@ public class Home extends TabActivity{
         //Adding all tabspec to tabhost
         tabHost.addTab(drinks);
         tabHost.addTab(food);
+
     }
 }

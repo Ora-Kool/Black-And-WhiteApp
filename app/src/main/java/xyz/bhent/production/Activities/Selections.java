@@ -33,12 +33,17 @@ public class Selections extends AppCompatActivity {
     private boolean state;
     private String selectedDrink = "";
     private DatabaseHelper databaseHelper;
+    private Animation animation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.selections);
         Bundle bundle = getIntent().getExtras();//  getting the data passed from the previous activity
         databaseHelper = new DatabaseHelper(this);
+        animation = AnimationUtils.loadAnimation(Selections.this, android.R.anim.fade_out);
+        animation.setDuration(5000);
+        animation.setRepeatCount(Animation.INFINITE);
+        animation.setRepeatMode(Animation.REVERSE);
 
         //UI binding to java
         ImageButton add = (ImageButton)findViewById(R.id.add_to_card);
@@ -67,6 +72,8 @@ public class Selections extends AppCompatActivity {
         header.setText(bundle.getString("selectedItem")); // setting the selected items as the header
         selectedDrink = bundle.getString("selectedItem");
 
+        add.setAnimation(animation);
+        animation.start();
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

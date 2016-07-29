@@ -19,7 +19,7 @@
         </activity>
         <activity
             android:name=".Activities.Drinks"
-            android:label="Home"
+            android:label="Drinks"
             android:screenOrientation="portrait" />
         <activity
             android:name=".Activities.Selections"
@@ -32,8 +32,7 @@
             android:theme="@style/BlacknWhiteTheme" />
         <activity
             android:name=".Activities.Home"
-            android:screenOrientation="portrait"
-            android:theme="@style/BlacknWhiteTheme" />
+            android:screenOrientation="portrait"/>
         <activity android:name=".Activities.Food"></activity>
     </application>
 

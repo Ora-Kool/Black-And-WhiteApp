@@ -59,7 +59,7 @@ public class Availables extends AppCompatActivity {
         comTextView = (TextView)findViewById(R.id.confirmed);
         notification.setVisibility(View.GONE);
 
-        overridePendingTransition(R.anim.slide_left_to_right, R.anim.slide_right_to_left);
+        overridePendingTransition(R.anim.slide_left_to_right, android.R.anim.fade_in);
 
         Bundle bundle  = getIntent().getExtras();
 
@@ -116,7 +116,7 @@ public class Availables extends AppCompatActivity {
                Map<String, String> map = databaseHelper.getAllItems();
                 //check if there is any item from the database
                 if(map.isEmpty()){
-                    Toast.makeText(Availables.this, "Oops! Cart Is Empty", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(Availables.this, "Oops! Cart Is Empty", Toast.LENGTH_LONG).show();
                     notification.setVisibility(View.VISIBLE);
                     comTextView.setText("Empty Cart!");
                     notification.postDelayed(new Runnable() {
@@ -125,7 +125,7 @@ public class Availables extends AppCompatActivity {
                             notification.setVisibility(View.GONE);
 
                         }
-                    }, 3000);
+                    }, 2000);
                 }else {
                     for (Map.Entry<String, String> entry : map.entrySet()) {
                         Toast.makeText(Availables.this, "The Items is " + entry.getKey() + " / the price is " + entry.getValue(), Toast.LENGTH_SHORT).show();
@@ -144,7 +144,7 @@ public class Availables extends AppCompatActivity {
                         public void run() {
                             notification.setVisibility(View.GONE);
                         }
-                    }, 5000);
+                    }, 2000);
                 }else {
                     final AlertDialog.Builder confirmReservations = new AlertDialog.Builder(Availables.this, R.style.BWAlertDialogTheme);
 
