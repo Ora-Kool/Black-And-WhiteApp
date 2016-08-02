@@ -23,11 +23,12 @@
         android:id="@+id/item_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:singleLine="true"
         android:layout_toRightOf="@+id/item_image"
         android:textColor="@android:color/black"
         android:layout_marginTop="26dp"
         android:layout_marginLeft="10dp"
-        android:textSize="18dp"
+        android:textSize="20dp"
         android:text="title"
         android:textStyle="bold"/>
 
@@ -37,33 +38,14 @@
         android:layout_width="wrap_content"
         android:layout_height="32dp"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="5dp"
         android:gravity="center"
-        android:textColor="#000000"
+        android:textColor="#16a085"
         android:text="price"
         android:layout_marginLeft="80dp"
         android:layout_below="@+id/item_title"
-        android:textSize="17sp"
-        android:textStyle="bold"/>
+        android:textSize="15sp"
+        android:textStyle="italic"/>
 
-    <!-- Counter -->
-    <!--<CheckBox-->
-        <!--android:id="@+id/order"-->
-        <!--android:layout_width="46dp"-->
-        <!--android:layout_height="45dp"-->
-        <!--android:layout_alignParentRight="true"-->
-        <!--android:layout_marginRight="10dp"-->
-        <!--android:layout_marginTop="26dp"-->
-        <!--android:gravity="center"-->
-        <!--android:textStyle="bold"/>-->
 
-    <!--<TextView-->
-        <!--android:id="@+id/statechecked"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignParentRight="true"-->
-        <!--android:layout_marginRight="10dp"-->
-        <!--android:layout_marginTop="26dp"-->
-        <!--android:textColor="#ffffff"-->
-        <!--android:gravity="center" />-->
 </RelativeLayout>

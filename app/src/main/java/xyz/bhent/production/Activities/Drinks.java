@@ -3,13 +3,12 @@ package xyz.bhent.production.Activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 
-import xyz.bhent.production.Methods.Data;
+import static xyz.bhent.production.Methods.Data.*;
 import xyz.bhent.production.Model.ItemModel;
 import xyz.bhent.production.R;
 import xyz.bhent.production.adapters.DrinksAdapter;
@@ -19,15 +18,13 @@ public class Drinks extends Activity {
     ListView listView;
     private ItemModel model;
     private ArrayList<ItemModel> itemModels = new ArrayList<>();
-    private Data data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.blacknwhite);
         listView = (ListView)findViewById(R.id.listView);
-        data = new Data();
-       // overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        overridePendingTransition(R.anim.slide_left_to_right, R.anim.slide_right_to_left);
         setMenuData();
 
         Resources resources = getResources();
@@ -35,19 +32,12 @@ public class Drinks extends Activity {
         listView.setAdapter(adapter);
 
 
-//        if(getSupportActionBar() != null){
-//            getSupportActionBar().setDisplayUseLogoEnabled(true);
-//            getSupportActionBar().isHideOnContentScrollEnabled();
-//            getSupportActionBar().setTitle("Black & White Drinks");
-//        }
-
-
 
     }
     public void setMenuData(){
-        for (int i = 0; i < data.Titles.length; i++){
+        for (int i = 0; i < Categories.length; i++){
              model = new ItemModel();
-             model.setTitle(data.Titles[i]);
+             model.setTitle(Categories[i]);
             itemModels.add(model);
         }
     }
@@ -55,12 +45,25 @@ public class Drinks extends Activity {
     public void onItemClick(int mPosition){
         ItemModel tempValues = (ItemModel) itemModels.get(mPosition);
         Bundle bundle = new Bundle();
-        bundle.putString("category", tempValues.getTitle());
-        Intent subcategory = new Intent(Drinks.this, Availables.class);
-        subcategory.putExtras(bundle);
-        startActivity(subcategory);
-                //creating an animation
-       //overridePendingTransition(R.anim.slide_left_to_right, android.R.anim.fade_out);
+
+        String selectedItem = tempValues.getTitle();
+        if(selectedItem.equalsIgnoreCase("Cocktails (avec alcool)") ||
+                selectedItem.equalsIgnoreCase("Cocktails (sans Alcool)") ||
+                selectedItem.equalsIgnoreCase("Cocktails Eteki")){
+            bundle.putString("cocktails", selectedItem);
+            Intent advanceIntent = new Intent(Drinks.this, AdvancedCocktail.class);
+            advanceIntent.putExtras(bundle);
+            overridePendingTransition(R.anim.slide_left_to_right, R.anim.slide_right_to_left);
+            startActivity(advanceIntent);
+
+        }else {
+            bundle.putString("category", tempValues.getTitle());
+            Intent subcategory = new Intent(Drinks.this, Availables.class);
+            subcategory.putExtras(bundle);
+            overridePendingTransition(R.anim.slide_left_to_right, R.anim.slide_right_to_left);
+            startActivity(subcategory);
+            //creating an animation
+        }
 
     }
 

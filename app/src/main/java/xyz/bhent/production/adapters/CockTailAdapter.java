@@ -8,42 +8,35 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.bumptech.glide.load.engine.Resource;
 
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
-import xyz.bhent.production.Activities.Availables;
+import xyz.bhent.production.Activities.AdvancedCocktail;
+import xyz.bhent.production.Activities.Drinks;
 import xyz.bhent.production.Model.ItemModel;
 import xyz.bhent.production.R;
 
 /**
  * Created by root on 7/22/16.
  */
-public class AvailableAdapter extends BaseAdapter implements View.OnClickListener{
+public class CockTailAdapter extends BaseAdapter implements View.OnClickListener{
     private final Activity context;
     private final ArrayList<ItemModel> modelArrayList;
     private static  LayoutInflater inflater = null;
     public Resources resources;
     ItemModel tempModel = null;
-    boolean[] itemChecked;
+    int i = 0;
 
-    public AvailableAdapter(Activity context, ArrayList<ItemModel> itemModels, Resources res){
+    public CockTailAdapter(Activity context, ArrayList<ItemModel> itemModels, Resources res){
         this.context = context;
         this.modelArrayList = itemModels;
         this.resources = res;
-
-        this.itemChecked = new boolean[itemModels.size()];
 
         inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -69,26 +62,22 @@ public class AvailableAdapter extends BaseAdapter implements View.OnClickListene
     }
 
     @Override
-    public View getView(final int position, View contentView, ViewGroup parent){
+    public View getView(int position, View contentView, ViewGroup parent){
        View view = contentView;
-        final ViewHolder holder;
+        ViewHolder holder;
         if(contentView == null){
-            view = inflater.inflate(R.layout.availablecustomizes, null);
+            view = inflater.inflate(R.layout.advanceview, null);
 
             holder = new ViewHolder();
             holder.drinkName = (TextView) view.findViewById(R.id.item_title);
-            holder.drinkPrice = (TextView)view.findViewById(R.id.price_lable);
-//            holder.selectedItem = (CheckBox)view.findViewById(R.id.order);
             holder.drinkImage = (ImageView)view.findViewById(R.id.item_image);
-//            holder.state = (TextView)view.findViewById(R.id.statechecked);
-
+            holder.inclusiveItems = (TextView)view.findViewById(R.id.inclusive);
             Animation animation = AnimationUtils.loadAnimation(context, R.anim.slide_right_to_left);
             Animation animateDrinkName = AnimationUtils.loadAnimation(context, R.anim.slide_left_to_right);
             animateDrinkName.setDuration(3000);
             animation.setDuration(3000);
+            holder.inclusiveItems.setAnimation(animation);
             holder.drinkName.setAnimation(animateDrinkName);
-            holder.drinkPrice.setAnimation(animation);
-
 
             view.setTag(holder);
         }else
@@ -100,28 +89,9 @@ public class AvailableAdapter extends BaseAdapter implements View.OnClickListene
             tempModel = (ItemModel)modelArrayList.get(position);
 
             //set model values in holder elements
-            holder.drinkName.setText(modelArrayList.get(position).getTitle());
-            holder.drinkPrice.setText(modelArrayList.get(position).getPrice());
-            holder.drinkImage.setImageResource(R.drawable.wine);
-
-//            if(modelArrayList.get(position).isChecked()){
-//                holder.selectedItem.setChecked(true);
-//            }else {
-//                holder.selectedItem.setChecked(false);
-//            }
-
-//            holder.selectedItem.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//                @Override
-//                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                    Toast.makeText(context, "checked "+isChecked, Toast.LENGTH_SHORT).show();
-//                    if(isChecked){
-//                        modelArrayList.get(position).setIsChecked(true);
-//                    }else {
-//                        modelArrayList.get(position).setIsChecked(false);
-//                    }
-//
-//                }
-//            });
+            holder.drinkName.setText(tempModel.getTitle());
+            holder.drinkImage.setImageResource(R.mipmap.ic_launcher);
+            holder.inclusiveItems.setText(tempModel.getInclusivelabel());
 
             view.setOnClickListener(new OnItemClickListener(position));
 
@@ -138,22 +108,19 @@ public class AvailableAdapter extends BaseAdapter implements View.OnClickListene
 
     public static class ViewHolder{
         public TextView drinkName;
-        public TextView drinkPrice;
-//        public TextView state;
-//        public CheckBox selectedItem;
         private ImageView drinkImage;
+        private TextView inclusiveItems;
 
     }
     private class OnItemClickListener implements View.OnClickListener{
         private int mPosition;
         OnItemClickListener(int position){
             mPosition = position;
-
         }
         @Override
         public void onClick(View arg){
-            Availables availables = (Availables)context;
-            availables.onItemClick(mPosition);
+            AdvancedCocktail advancedCocktail = (AdvancedCocktail)context;
+            advancedCocktail.onItemClick(mPosition);
         }
     }
 }

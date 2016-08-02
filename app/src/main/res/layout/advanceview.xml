@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:background="#ffffff">
+
+
+<!-- Icon -->
+<ImageView
+    android:id="@+id/item_image"
+    android:layout_width="40dp"
+    android:layout_height="40dp"
+    android:background="@drawable/ring"
+    android:layout_alignParentLeft="true"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="20dp"
+    android:layout_marginTop="30dp"
+    android:src="@mipmap/ic_launcher"
+    android:layout_marginBottom="13dp"/>
+
+<!-- Title -->
+<TextView
+    android:id="@+id/item_title"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:singleLine="true"
+    android:layout_toRightOf="@+id/item_image"
+    android:textColor="@android:color/black"
+    android:layout_marginTop="26dp"
+    android:layout_marginLeft="10dp"
+    android:textSize="20dp"
+    android:text="title"
+    android:textStyle="bold"/>
+
+<!-- Counter -->
+<TextView
+    android:id="@+id/inclusive"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginRight="0dp"
+    android:layout_marginTop="2dp"
+    android:layout_marginBottom="10dp"
+    android:gravity="center"
+    android:textColor="#16a085"
+    android:text="price"
+    android:layout_marginLeft="50dp"
+    android:layout_below="@+id/item_title"
+    android:textSize="15sp"
+    android:textStyle="italic"/>
+
+
+</RelativeLayout>

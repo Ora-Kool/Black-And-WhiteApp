@@ -9,21 +9,44 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
+import android.widget.Button;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 import android.widget.Toast;
 
+import java.util.Map;
+
+import xyz.bhent.production.Connectivity.DatabaseHelper;
 import xyz.bhent.production.R;
 
 public class Home extends TabActivity {
+    private DatabaseHelper databaseHelper;
+    private int count = 0;
+    private Button checkoutButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
+        checkoutButton = (Button)findViewById(R.id.checkout);
+        databaseHelper = new DatabaseHelper(Home.this);
+        
+
+        checkoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                count = databaseHelper.itemsCount();
+                if(count == 0){
+                    Toast.makeText(Home.this, "No Item in Cart!", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(Home.this, "Found something!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
 
         final TabHost tabHost = getTabHost();
-        overridePendingTransition(R.anim.slide_left_to_right, Animation.REVERSE);
+        overridePendingTransition(R.anim.slide_left_to_right, android.R.anim.fade_out);
 
         //Tab for Drinks
         TabHost.TabSpec drinks = tabHost.newTabSpec("Drinks").setIndicator("Drinks", getResources().getDrawable(R.drawable.drinksselector));

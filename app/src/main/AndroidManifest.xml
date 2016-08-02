@@ -34,6 +34,12 @@
             android:name=".Activities.Home"
             android:screenOrientation="portrait"/>
         <activity android:name=".Activities.Food"></activity>
+        <activity
+            android:name=".Activities.AdvancedCocktail"
+            android:screenOrientation="portrait"
+            android:label="Cocktail"
+            android:theme="@style/BlacknWhiteTheme"/>
+
     </application>
 
 </manifest>

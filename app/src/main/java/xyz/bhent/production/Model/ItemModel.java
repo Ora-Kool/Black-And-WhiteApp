@@ -9,6 +9,7 @@ public class ItemModel {
     private String price;
     private String image;
     private String url;
+    private String inclusivelabel;
 
 
     public String getUrl() {
@@ -53,5 +54,17 @@ public class ItemModel {
         this.title = title;
     }
 
+    public String getInclusivelabel() {
+        return inclusivelabel;
+    }
+
+    public void setInclusivelabel(String inclusivelabel) {
+        this.inclusivelabel = inclusivelabel;
+    }
+
+    @Override
+    public String toString(){
+        return getTitle()+" "+ getPrice();
+    }
 
 }

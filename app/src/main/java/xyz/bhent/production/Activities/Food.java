@@ -22,7 +22,7 @@ public class Food extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.blacknwhite);
+        setContentView(R.layout.foodlayout);
         listView = (ListView)findViewById(R.id.listView);
 
         overridePendingTransition(R.anim.slide_left_to_right, android.R.anim.fade_out);

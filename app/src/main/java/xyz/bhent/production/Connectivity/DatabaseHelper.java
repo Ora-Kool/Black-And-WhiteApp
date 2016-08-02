@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -66,7 +67,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         while (cursor.isAfterLast() == false){
 
 
-            hashMap.put(cursor.getString(cursor.getColumnIndex(RESERVATION_ITEM_NAME))+" = "+
+            hashMap.put(cursor.getString(cursor.getColumnIndex(RESERVATION_ITEM_NAME))+","+
                     cursor.getString(cursor.getColumnIndex(RESERVATION_ITEM_QUANTITY)),
                     cursor.getString(cursor.getColumnIndex(RESERVATION_ITEM_PRICE)));
 
@@ -90,7 +91,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         for(Map.Entry<String, String> deletingEntry : map.entrySet()){
             Log.d("deleting", deletingEntry.getKey()+":"+deletingEntry.getValue());
         }
-        database.execSQL("delete from "+ DATABASE_TABLE_NAME);
+        database.execSQL("delete from " + DATABASE_TABLE_NAME);
         return true;
+    }
+    public int itemsCount(){
+        String query = "SELECT * FROM "+DATABASE_TABLE_NAME;
+        SQLiteDatabase database = this.getReadableDatabase();
+        Cursor cursor = database.rawQuery(query, null);
+        int count = cursor.getCount();
+        return count;
     }
 }

@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -20,23 +21,24 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Map;
 
 import xyz.bhent.production.Connectivity.DatabaseHelper;
 import xyz.bhent.production.Connectivity.InfosRetrieving;
+import static xyz.bhent.production.Methods.Data.*;
 import xyz.bhent.production.Model.ItemModel;
 import xyz.bhent.production.R;
 import xyz.bhent.production.adapters.AvailableAdapter;
+
 
 public class Availables extends AppCompatActivity {
     private ListView availsListView;
     private AvailableAdapter availableAdapter;
     private ArrayList<ItemModel> itemModels;
     private boolean state;
-    private ItemModel tempValues;
+    private ItemModel itemSelected;
     private DatabaseHelper databaseHelper;
     private InfosRetrieving retrieving;
     private static int  REQUEST_CODE = 0001;
@@ -45,6 +47,9 @@ public class Availables extends AppCompatActivity {
     private Animation animation;
     private TextView comTextView;
     private String confirmation = "";
+    private int counter = 0;
+    private Bundle bundle;
+
 
     private ProgressDialog progressDialog;
     @Override
@@ -59,19 +64,15 @@ public class Availables extends AppCompatActivity {
         comTextView = (TextView)findViewById(R.id.confirmed);
         notification.setVisibility(View.GONE);
 
-        overridePendingTransition(R.anim.slide_left_to_right, android.R.anim.fade_in);
 
-        Bundle bundle  = getIntent().getExtras();
+        bundle  = getIntent().getExtras();
 
         retrieving = new InfosRetrieving(this); //instant of where we post, retrieve information
         // using volley library
 
-        model.setTitle("MALTA");
-        model.setPrice("2500");
-        itemModels.add(model);
 
 
-        setListData();
+        setListData(bundle.getString("category"));
 
 
         Resources resources = getResources();
@@ -80,13 +81,15 @@ public class Availables extends AppCompatActivity {
 
         availsListView.setAdapter(availableAdapter);
 
+        overridePendingTransition(R.anim.slide_left_to_right, R.anim.slide_right_to_left);
+
 
         if(getSupportActionBar() != null){
 
                 getSupportActionBar().setDisplayShowHomeEnabled(true);
                 getSupportActionBar().setDisplayUseLogoEnabled(true);
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                getSupportActionBar().setTitle(bundle.getString("category").toUpperCase());
+                getSupportActionBar().setTitle(bundle.getString("category"));
 
         }
     }
@@ -161,23 +164,21 @@ public class Availables extends AppCompatActivity {
                     confirmReservations.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-//                            progressDialog = new ProgressDialog(Availables.this, android.R.style.Theme_Translucent);
-//
-//                            progressDialog.setMessage("Reservation in progress. please wait....");
-//
-//                            progressDialog.show();
-//
-//                            Handler handler = new Handler();
-//                            handler.postDelayed(new Runnable() {
-//                                @Override
-//                                public void run() {
-//                                    progressDialog.cancel();
-//                                }
-//                            },5000);
-                            ItemModel temp = new ItemModel();
-                            temp.setTitle("Fanta Cola");
-                            temp.setPrice("200000");
-                            retrieving.POST_DATA(temp);
+                            //make reservation call here *having some probs here need to come back to it
+                            Map<String, String> map = databaseHelper.getAllItems();
+                            for (Map.Entry<String, String> entry : map.entrySet()) {
+                                if (counter != databaseHelper.itemsCount()) {
+                                    model = new ItemModel();
+                                    model.setTitle(entry.getKey());
+                                    model.setPrice(entry.getValue());
+
+                                } else if(counter == databaseHelper.itemsCount()){
+                                    break;
+                                }
+
+                            }
+                            retrieving.POST_DATA(model);
+
                         }
                     });
 
@@ -202,30 +203,523 @@ public class Availables extends AppCompatActivity {
     }
 
     //method that populate the list adapter
-    public void setListData(){
-
-
-
-        for (int i = 1; i <= 4; i++){
-            model = new ItemModel();
-            model.setTitle("Volka " + i);
-            model.setPrice("25000" + i);
-            model.setImage("image" + i);
-            model.setUrl("http://www." + i + ".com");
-            itemModels.add(model);
+    public void setListData(String item){
+            switch (item){
+                case "Boissons Chaudes":
+                    Map<String, Integer> title_price = BChaudes();
+                    for(Map.Entry<String, Integer> entyValue : title_price.entrySet()){
+                        model = new ItemModel();
+                        model.setTitle(entyValue.getKey());
+                        model.setPrice(String.valueOf(entyValue.getValue()+" Fcfa"));
+                        itemModels.add(model);
+                    }
+                    break;
+                case "Boissons Froides":
+                    Map<String, Integer> bFroides = BFroides();
+                    for(Map.Entry<String, Integer> entyValue : bFroides.entrySet()){
+                        model = new ItemModel();
+                        model.setTitle(entyValue.getKey());
+                        model.setPrice(String.valueOf(entyValue.getValue()+" Fcfa"));
+                        itemModels.add(model);
+                    }
+                    break;
+                case "Boissons Gazeuzes (sans alcool)":
+                    Map<String, Integer> BGasanalc  = BGsansAlcol();
+                    for(Map.Entry<String, Integer> entyValue : BGasanalc.entrySet()){
+                        model = new ItemModel();
+                        model.setTitle(entyValue.getKey());
+                        model.setPrice(String.valueOf(entyValue.getValue()+" Fcfa"));
+                        itemModels.add(model);
+                    }
+                    break;
+                case "Boissons Energétiques":
+                    Map<String, Integer> BEnger  = BEnerge();
+                    for(Map.Entry<String, Integer> entyValue : BEnger.entrySet()){
+                        model = new ItemModel();
+                        model.setTitle(entyValue.getKey());
+                        model.setPrice(String.valueOf(entyValue.getValue()+" Fcfa"));
+                        itemModels.add(model);
+                    }
+                    break;
+                case "Boissons Gazeuzes (avec alcool)":
+                    Map<String, Integer> BEngerAlc  = BEngeAlc();
+                    for(Map.Entry<String, Integer> entyValue : BEngerAlc.entrySet()){
+                        model = new ItemModel();
+                        model.setTitle(entyValue.getKey());
+                        model.setPrice(String.valueOf(entyValue.getValue()+" Fcfa"));
+                        itemModels.add(model);
+                    }
+                    break;
+                case "Bieres":
+                    Map<String, Integer> Bies  = Bieres();
+                    for(Map.Entry<String, Integer> entyValue : Bies.entrySet()){
+                        model = new ItemModel();
+                        model.setTitle(entyValue.getKey());
+                        model.setPrice(String.valueOf(entyValue.getValue()+" Fcfa"));
+                        itemModels.add(model);
+                    }
+                    break;
+                case "Liqueurs":
+                    break;
+                case  "Americano":
+                    Map<String, Integer> AmericList = americano();
+                    for(Map.Entry<String, Integer> entryList : AmericList.entrySet()){
+                        model = new ItemModel();
+                        model.setTitle(entryList.getKey());
+                        model.setPrice(String.valueOf(entryList.getValue()) + " Fcfa");
+                        itemModels.add(model);
+                    }
+                    break;
+                case  "Caipirinha":
+                    break;
+                case   "Margarita":
+                    break;
+                case  "Vodka":
+                    break;
+                case "Cognac":
+                    break;
+                case  "Whisky":
+                    break;
+                case  "Cocktails Eteki":
+                    break;
+                case "Vin Rouge":
+                    break;
+                case  "Vin Blanc":
+                    break;
+                case "Rose":
+                    Map<String, Integer> rose  = RoseSub();
+                    for(Map.Entry<String, Integer> entyValue : rose.entrySet()){
+                        model = new ItemModel();
+                        model.setTitle(entyValue.getKey());
+                        model.setPrice(String.valueOf(entyValue.getValue()+" Fcfa"));
+                        itemModels.add(model);
+                    }
+                    break;
+                case "Vin Mousseux":
+                    Map<String, Integer> VinMo  = VinMous();
+                    for(Map.Entry<String, Integer> entyValue : VinMo.entrySet()){
+                        model = new ItemModel();
+                        model.setTitle(entyValue.getKey());
+                        model.setPrice(String.valueOf(entyValue.getValue()+" Fcfa"));
+                        itemModels.add(model);
+                    }
+                    break;
+                case "Champagnes":
+                    Map<String, Integer> champs  = Champs();
+                    for(Map.Entry<String, Integer> entyValue : champs.entrySet()){
+                        model = new ItemModel();
+                        model.setTitle(entyValue.getKey());
+                        model.setPrice(String.valueOf(entyValue.getValue()+" Fcfa"));
+                        itemModels.add(model);
+                    }
+                    break;
+                default:
+                    model = new ItemModel();
+                    model.setTitle("Empty");
+                    itemModels.add(model);
         }
     }
 
     //method call upon clicking a specific item on the list
     public void onItemClick(int mPosition){
-        tempValues = itemModels.get(mPosition);//get the reference of the selected item on the list
+        itemSelected = itemModels.get(mPosition);//get the reference of the selected item on the list
 
-        Intent intent = new Intent(Availables.this, Selections.class);
-        Bundle bundle = new Bundle();
-        bundle.putString("selectedItem", tempValues.getTitle());
-        intent.putExtras(bundle);
-        startActivityForResult(intent, REQUEST_CODE);
-        overridePendingTransition(R.anim.activity_open, R.anim.slide_left_to_right);
+        if(bundle.getString("category").equalsIgnoreCase("Boissons Chaudes")){
+            AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.BWAlertDialogTheme);
+            builder.setTitle("Add Item");
+            builder.setMessage("Are you sure?");
+            builder.setIcon(R.mipmap.ic_launcher);
+            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    state = databaseHelper.insertItems(itemSelected.getTitle(), "", itemSelected.getPrice());
+                    if (state == true) {
+                        notification.setVisibility(View.VISIBLE);
+                        comTextView.setText(itemSelected.getTitle() + " Added!");
+                        notification.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                notification.setVisibility(View.GONE);
+
+                            }
+                        }, 2000);
+                    } else {
+                        notification.setVisibility(View.VISIBLE);
+                        comTextView.setText("Error!!!");
+                        comTextView.setTextColor(Color.RED);
+                        notification.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                notification.setVisibility(View.GONE);
+
+                            }
+                        }, 2000);
+                    }
+                }
+            });
+            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+
+            Dialog dialog = builder.create();
+            dialog.show();
+        }else if(bundle.getString("category").equalsIgnoreCase("Boissons Froides")) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.BWAlertDialogTheme);
+            builder.setTitle("Add Item");
+            builder.setMessage("Are you sure?");
+            builder.setIcon(R.mipmap.ic_launcher);
+            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    state = databaseHelper.insertItems(itemSelected.getTitle(), "", itemSelected.getPrice());
+                    if (state == true) {
+                        notification.setVisibility(View.VISIBLE);
+                        comTextView.setText(itemSelected.getTitle() + " Added!");
+                        notification.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                notification.setVisibility(View.GONE);
+
+                            }
+                        }, 2000);
+                    } else {
+                        notification.setVisibility(View.VISIBLE);
+                        comTextView.setText("Error!!!");
+                        comTextView.setTextColor(Color.RED);
+                        notification.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                notification.setVisibility(View.GONE);
+
+                            }
+                        }, 2000);
+                    }
+                }
+            });
+            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+
+            Dialog dialog = builder.create();
+            dialog.show();
+        }else if(bundle.getString("category").equalsIgnoreCase("Boissons Gazeuzes (sans alcool)")) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.BWAlertDialogTheme);
+            builder.setTitle("Add Item");
+            builder.setMessage("Are you sure?");
+            builder.setIcon(R.mipmap.ic_launcher);
+            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    state = databaseHelper.insertItems(itemSelected.getTitle(), "", itemSelected.getPrice());
+                    if (state == true) {
+                        notification.setVisibility(View.VISIBLE);
+                        comTextView.setText(itemSelected.getTitle() + " Added!");
+                        notification.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                notification.setVisibility(View.GONE);
+
+                            }
+                        }, 2000);
+                    } else {
+                        notification.setVisibility(View.VISIBLE);
+                        comTextView.setText("Error!!!");
+                        comTextView.setTextColor(Color.RED);
+                        notification.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                notification.setVisibility(View.GONE);
+
+                            }
+                        }, 2000);
+                    }
+                }
+            });
+            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+
+            Dialog dialog = builder.create();
+            dialog.show();
+        }else if(bundle.getString("category").equalsIgnoreCase("Boissons Energétiques")) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.BWAlertDialogTheme);
+            builder.setTitle("Add Item");
+            builder.setMessage("Are you sure?");
+            builder.setIcon(R.mipmap.ic_launcher);
+            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    state = databaseHelper.insertItems(itemSelected.getTitle(), "", itemSelected.getPrice());
+                    if (state == true) {
+                        notification.setVisibility(View.VISIBLE);
+                        comTextView.setText(itemSelected.getTitle() + " Added!");
+                        notification.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                notification.setVisibility(View.GONE);
+
+                            }
+                        }, 2000);
+                    } else {
+                        notification.setVisibility(View.VISIBLE);
+                        comTextView.setText("Error!!!");
+                        comTextView.setTextColor(Color.RED);
+                        notification.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                notification.setVisibility(View.GONE);
+
+                            }
+                        }, 2000);
+                    }
+                }
+            });
+            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+
+            Dialog dialog = builder.create();
+            dialog.show();
+        }else if(bundle.getString("category").equalsIgnoreCase("Boissons Gazeuzes (avec alcool)")) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.BWAlertDialogTheme);
+            builder.setTitle("Add Item");
+            builder.setMessage("Are you sure?");
+            builder.setIcon(R.mipmap.ic_launcher);
+            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    state = databaseHelper.insertItems(itemSelected.getTitle(), "", itemSelected.getPrice());
+                    if (state == true) {
+                        notification.setVisibility(View.VISIBLE);
+                        comTextView.setText(itemSelected.getTitle() + " Added!");
+                        notification.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                notification.setVisibility(View.GONE);
+
+                            }
+                        }, 2000);
+                    } else {
+                        notification.setVisibility(View.VISIBLE);
+                        comTextView.setText("Error!!!");
+                        comTextView.setTextColor(Color.RED);
+                        notification.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                notification.setVisibility(View.GONE);
+
+                            }
+                        }, 2000);
+                    }
+                }
+            });
+            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+
+            Dialog dialog = builder.create();
+            dialog.show();
+        }else if(bundle.getString("category").equalsIgnoreCase("Bieres")) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.BWAlertDialogTheme);
+            builder.setTitle("Add Item");
+            builder.setMessage("Are you sure?");
+            builder.setIcon(R.mipmap.ic_launcher);
+            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    state = databaseHelper.insertItems(itemSelected.getTitle(), "", itemSelected.getPrice());
+                    if (state == true) {
+                        notification.setVisibility(View.VISIBLE);
+                        comTextView.setText(itemSelected.getTitle() + " Added!");
+                        notification.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                notification.setVisibility(View.GONE);
+
+                            }
+                        }, 2000);
+                    } else {
+                        notification.setVisibility(View.VISIBLE);
+                        comTextView.setText("Error!!!");
+                        comTextView.setTextColor(Color.RED);
+                        notification.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                notification.setVisibility(View.GONE);
+
+                            }
+                        }, 2000);
+                    }
+                }
+            });
+            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+
+            Dialog dialog = builder.create();
+            dialog.show();
+        }else if(bundle.getString("category").equalsIgnoreCase("Rose")) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.BWAlertDialogTheme);
+            builder.setTitle("Add Item");
+            builder.setMessage("Are you sure?");
+            builder.setIcon(R.mipmap.ic_launcher);
+            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    state = databaseHelper.insertItems(itemSelected.getTitle(), "", itemSelected.getPrice());
+                    if (state == true) {
+                        notification.setVisibility(View.VISIBLE);
+                        comTextView.setText(itemSelected.getTitle() + " Added!");
+                        notification.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                notification.setVisibility(View.GONE);
+
+                            }
+                        }, 2000);
+                    } else {
+                        notification.setVisibility(View.VISIBLE);
+                        comTextView.setText("Error!!!");
+                        comTextView.setTextColor(Color.RED);
+                        notification.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                notification.setVisibility(View.GONE);
+
+                            }
+                        }, 2000);
+                    }
+                }
+            });
+            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+
+            Dialog dialog = builder.create();
+            dialog.show();
+        }else if(bundle.getString("category").equalsIgnoreCase("Vin Mousseux")) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.BWAlertDialogTheme);
+            builder.setTitle("Add Item");
+            builder.setMessage("Are you sure?");
+            builder.setIcon(R.mipmap.ic_launcher);
+            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    state = databaseHelper.insertItems(itemSelected.getTitle(), "", itemSelected.getPrice());
+                    if (state == true) {
+                        notification.setVisibility(View.VISIBLE);
+                        comTextView.setText(itemSelected.getTitle() + " Added!");
+                        notification.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                notification.setVisibility(View.GONE);
+
+                            }
+                        }, 2000);
+                    } else {
+                        notification.setVisibility(View.VISIBLE);
+                        comTextView.setText("Error!!!");
+                        comTextView.setTextColor(Color.RED);
+                        notification.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                notification.setVisibility(View.GONE);
+
+                            }
+                        }, 2000);
+                    }
+                }
+            });
+            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+
+            Dialog dialog = builder.create();
+            dialog.show();
+        }else if(bundle.getString("category").equalsIgnoreCase("Champagnes")) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.BWAlertDialogTheme);
+            builder.setTitle("Add Item");
+            builder.setMessage("Are you sure?");
+            builder.setIcon(R.mipmap.ic_launcher);
+            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    state = databaseHelper.insertItems(itemSelected.getTitle(), "", itemSelected.getPrice());
+                    if (state == true) {
+                        notification.setVisibility(View.VISIBLE);
+                        comTextView.setText(itemSelected.getTitle() + " Added!");
+                        notification.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                notification.setVisibility(View.GONE);
+
+                            }
+                        }, 2000);
+                    } else {
+                        notification.setVisibility(View.VISIBLE);
+                        comTextView.setText("Error!!!");
+                        comTextView.setTextColor(Color.RED);
+                        notification.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                notification.setVisibility(View.GONE);
+
+                            }
+                        }, 2000);
+                    }
+                }
+            });
+            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+
+            Dialog dialog = builder.create();
+            dialog.show();
+        }
+        else {
+            Intent intent = new Intent(Availables.this, Selections.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("selectedItem", itemSelected.getTitle());
+            intent.putExtras(bundle);
+            startActivityForResult(intent, REQUEST_CODE);
+            overridePendingTransition(R.anim.activity_open, R.anim.slide_left_to_right);
+        }
 
    }
 
@@ -262,4 +756,9 @@ public class Availables extends AppCompatActivity {
             }
         }catch (Exception e){}
     }
+
+    //this method handles the way the reservation is made, some items have quantity while others don't
+
+
+
 }
