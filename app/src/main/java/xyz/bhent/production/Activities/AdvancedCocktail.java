@@ -17,9 +17,11 @@ import xyz.bhent.production.Model.ItemModel;
 import xyz.bhent.production.R;
 import xyz.bhent.production.adapters.CockTailAdapter;
 
+import static xyz.bhent.production.Methods.Data.Vrouge;
 import static xyz.bhent.production.Methods.Data.cocktailAlco;
 import static xyz.bhent.production.Methods.Data.cocktailEteki;
 import static xyz.bhent.production.Methods.Data.cocktailNonAlc;
+import static xyz.bhent.production.Methods.Data.vinBlanc;
 
 public class AdvancedCocktail extends AppCompatActivity {
     CockTailAdapter adapter;
@@ -110,6 +112,24 @@ public class AdvancedCocktail extends AppCompatActivity {
                     itemModels.add(model);
                 }
                 break;
+            case "Vin Rouge":
+                HashMap<String, String> vrg = Vrouge();
+                for(Map.Entry<String, String> cockE : vrg.entrySet()){
+                    model = new ItemModel();
+                    model.setTitle(cockE.getKey().trim());
+                    model.setInclusivelabel(cockE.getValue().trim());
+                    itemModels.add(model);
+                }
+                break;
+            case "Vin Blanc":
+                HashMap<String, String> vinBl = vinBlanc();
+                for(Map.Entry<String, String> cockE : vinBl.entrySet()){
+                    model = new ItemModel();
+                    model.setTitle(cockE.getKey().trim());
+                    model.setInclusivelabel(cockE.getValue().trim());
+                    itemModels.add(model);
+                }
+                break;
         }
     }
 
@@ -117,6 +137,7 @@ public class AdvancedCocktail extends AppCompatActivity {
         ItemModel tempValues = (ItemModel) itemModels.get(mPosition);
         Bundle bundle = new Bundle();
         bundle.putString("category", tempValues.getTitle());
+        bundle.putString("inclusive", tempValues.getInclusivelabel());
         Intent subcategory = new Intent(AdvancedCocktail.this, Availables.class);
         subcategory.putExtras(bundle);
         overridePendingTransition(R.anim.slide_left_to_right, android.R.anim.fade_out);

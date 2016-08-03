@@ -206,110 +206,144 @@ public class Availables extends AppCompatActivity {
     public void setListData(String item){
             switch (item){
                 case "Boissons Chaudes":
-                    Map<String, Integer> title_price = BChaudes();
-                    for(Map.Entry<String, Integer> entyValue : title_price.entrySet()){
+                    Map<String, String> title_price = BChaudes();
+                    for(Map.Entry<String, String> entyValue : title_price.entrySet()){
                         model = new ItemModel();
                         model.setTitle(entyValue.getKey());
-                        model.setPrice(String.valueOf(entyValue.getValue()+" Fcfa"));
+                        model.setPrice(entyValue.getValue()+" Fcfa");
                         itemModels.add(model);
                     }
                     break;
                 case "Boissons Froides":
-                    Map<String, Integer> bFroides = BFroides();
-                    for(Map.Entry<String, Integer> entyValue : bFroides.entrySet()){
+                    Map<String, String> bFroides = BFroides();
+                    for(Map.Entry<String, String> entyValue : bFroides.entrySet()){
                         model = new ItemModel();
                         model.setTitle(entyValue.getKey());
-                        model.setPrice(String.valueOf(entyValue.getValue()+" Fcfa"));
+                        model.setPrice(entyValue.getValue()+" Fcfa");
                         itemModels.add(model);
                     }
                     break;
                 case "Boissons Gazeuzes (sans alcool)":
-                    Map<String, Integer> BGasanalc  = BGsansAlcol();
-                    for(Map.Entry<String, Integer> entyValue : BGasanalc.entrySet()){
+                    Map<String, String> BGasanalc  = BGsansAlcol();
+                    for(Map.Entry<String, String> entyValue : BGasanalc.entrySet()){
                         model = new ItemModel();
                         model.setTitle(entyValue.getKey());
-                        model.setPrice(String.valueOf(entyValue.getValue()+" Fcfa"));
+                        model.setPrice(entyValue.getValue()+" Fcfa");
                         itemModels.add(model);
                     }
                     break;
                 case "Boissons Energétiques":
-                    Map<String, Integer> BEnger  = BEnerge();
-                    for(Map.Entry<String, Integer> entyValue : BEnger.entrySet()){
+                    Map<String, String> BEnger  = BEnerge();
+                    for(Map.Entry<String, String> entyValue : BEnger.entrySet()){
                         model = new ItemModel();
                         model.setTitle(entyValue.getKey());
-                        model.setPrice(String.valueOf(entyValue.getValue()+" Fcfa"));
+                        model.setPrice(entyValue.getValue()+" Fcfa");
                         itemModels.add(model);
                     }
                     break;
                 case "Boissons Gazeuzes (avec alcool)":
-                    Map<String, Integer> BEngerAlc  = BEngeAlc();
-                    for(Map.Entry<String, Integer> entyValue : BEngerAlc.entrySet()){
+                    Map<String, String> BEngerAlc  = BEngeAlc();
+                    for(Map.Entry<String, String> entyValue : BEngerAlc.entrySet()){
                         model = new ItemModel();
                         model.setTitle(entyValue.getKey());
-                        model.setPrice(String.valueOf(entyValue.getValue()+" Fcfa"));
+                        model.setPrice(entyValue.getValue()+" Fcfa");
                         itemModels.add(model);
                     }
                     break;
                 case "Bieres":
-                    Map<String, Integer> Bies  = Bieres();
-                    for(Map.Entry<String, Integer> entyValue : Bies.entrySet()){
+                    Map<String, String> Bies  = Bieres();
+                    for(Map.Entry<String, String> entyValue : Bies.entrySet()){
                         model = new ItemModel();
                         model.setTitle(entyValue.getKey());
-                        model.setPrice(String.valueOf(entyValue.getValue()+" Fcfa"));
+                        model.setPrice(entyValue.getValue()+" Fcfa");
                         itemModels.add(model);
                     }
                     break;
-                case "Liqueurs":
+                case "Americano":
+                case "Caipirinha":
+                case "Margarita":
+                case "Pina Colada":
+                case "Tequila Sunrise":
+                case "Mojito":
+                case "B52":
+                case "Cosmopolitan":
+                case "Daiquiri":
+                case "Manhattan":
+                case "Martini Cocktail":
+                    model = new ItemModel();
+                    model.setTitle(bundle.getString("inclusive"));
+                    model.setPrice("5,000 Fcfa");
+                    itemModels.add(model);
                     break;
-                case  "Americano":
-                    Map<String, Integer> AmericList = americano();
-                    for(Map.Entry<String, Integer> entryList : AmericList.entrySet()){
-                        model = new ItemModel();
-                        model.setTitle(entryList.getKey());
-                        model.setPrice(String.valueOf(entryList.getValue()) + " Fcfa");
-                        itemModels.add(model);
-                    }
+                case "Negroni":
+                case "Long Island Ice-Tea":
+                case "Mexican Ice-Tea":
+                    model = new ItemModel();
+                    model.setTitle(bundle.getString("inclusive"));
+                    model.setPrice("7,500 Fcfa");
+                    itemModels.add(model);
                     break;
-                case  "Caipirinha":
+                case "Black&White":
+                case "Florida":
+                case "Virgin Mojito":
+                    model = new ItemModel();
+                    model.setTitle(bundle.getString("inclusive"));
+                    model.setPrice("4,000 Fcfa");
+                    itemModels.add(model);
                     break;
-                case   "Margarita":
+                case "Virgin Etekjito":
+                    model = new ItemModel();
+                    model.setTitle(bundle.getString("inclusive"));
+                    model.setPrice("4,000 Fcfa");
+                    itemModels.add(model);
                     break;
-                case  "Vodka":
+                case "Blueteki":
+                case "Etekjito":
+                case "Eteki Samba":
+                    model = new ItemModel();
+                    model.setTitle(bundle.getString("inclusive"));
+                    model.setPrice("5,000 Fcfa");
+                    itemModels.add(model);
                     break;
-                case "Cognac":
+                case "Eteki Boom Boom (4 shots)":
+                    model = new ItemModel();
+                    model.setTitle(bundle.getString("inclusive"));
+                    model.setPrice("8,000 Fcfa");
+                    itemModels.add(model);
                     break;
                 case  "Whisky":
                     break;
                 case  "Cocktails Eteki":
                     break;
                 case "Vin Rouge":
+
                     break;
                 case  "Vin Blanc":
                     break;
                 case "Rose":
-                    Map<String, Integer> rose  = RoseSub();
-                    for(Map.Entry<String, Integer> entyValue : rose.entrySet()){
+                    Map<String, String> rose  = RoseSub();
+                    for(Map.Entry<String, String> entyValue : rose.entrySet()){
                         model = new ItemModel();
                         model.setTitle(entyValue.getKey());
-                        model.setPrice(String.valueOf(entyValue.getValue()+" Fcfa"));
+                        model.setPrice(entyValue.getValue()+" Fcfa");
                         itemModels.add(model);
                     }
                     break;
                 case "Vin Mousseux":
-                    Map<String, Integer> VinMo  = VinMous();
-                    for(Map.Entry<String, Integer> entyValue : VinMo.entrySet()){
+                    Map<String, String> VinMo  = VinMous();
+                    for(Map.Entry<String, String> entyValue : VinMo.entrySet()){
                         model = new ItemModel();
                         model.setTitle(entyValue.getKey());
-                        model.setPrice(String.valueOf(entyValue.getValue()+" Fcfa"));
+                        model.setPrice(entyValue.getValue()+" Fcfa");
                         itemModels.add(model);
                     }
                     break;
                 case "Champagnes":
-                    Map<String, Integer> champs  = Champs();
-                    for(Map.Entry<String, Integer> entyValue : champs.entrySet()){
+                    Map<String, String> champs  = Champs();
+                    for(Map.Entry<String, String> entyValue : champs.entrySet()){
                         model = new ItemModel();
                         model.setTitle(entyValue.getKey());
-                        model.setPrice(String.valueOf(entyValue.getValue()+" Fcfa"));
+                        model.setPrice(entyValue.getValue()+" Fcfa");
                         itemModels.add(model);
                     }
                     break;
@@ -705,6 +739,108 @@ public class Availables extends AppCompatActivity {
             builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+
+            Dialog dialog = builder.create();
+            dialog.show();
+        }else if(bundle.getString("category").equalsIgnoreCase("Americano") ||
+                bundle.getString("category").equalsIgnoreCase("Caipirinha") ||
+                bundle.getString("category").equalsIgnoreCase("Margarita") ||
+                bundle.getString("category").equalsIgnoreCase("Pina Colada") ||
+                bundle.getString("category").equalsIgnoreCase("Tequila Sunrise") ||
+                bundle.getString("category").equalsIgnoreCase("Mojito") ||
+                bundle.getString("category").equalsIgnoreCase("B52") ||
+                bundle.getString("category").equalsIgnoreCase("Cosmopolitan") ||
+                bundle.getString("category").equalsIgnoreCase("Daiquiri") ||
+                bundle.getString("category").equalsIgnoreCase("Manhattan") ||
+                bundle.getString("category").equalsIgnoreCase("Martini Cocktail") ||
+                bundle.getString("category").equalsIgnoreCase("Negroni") ||
+                bundle.getString("category").equalsIgnoreCase("Long Island Ice-Tea") ||
+                bundle.getString("category").equalsIgnoreCase("Mexican Ice-Tea")) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.BWAlertDialogTheme);
+            builder.setTitle("Add Item");
+            builder.setMessage("Are you sure?");
+            builder.setIcon(R.mipmap.ic_launcher);
+            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    state = databaseHelper.insertItems(bundle.getString("category"), "", itemSelected.getPrice());
+                    if (state == true) {
+                        notification.setVisibility(View.VISIBLE);
+                        comTextView.setText(itemSelected.getTitle() + " Added!");
+                        notification.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                notification.setVisibility(View.GONE);
+
+                            }
+                        }, 2000);
+                    } else {
+                        notification.setVisibility(View.VISIBLE);
+                        comTextView.setText("Error!!!");
+                        comTextView.setTextColor(Color.RED);
+                        notification.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                notification.setVisibility(View.GONE);
+
+                            }
+                        }, 2000);
+                    }
+                }
+            });
+            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+
+            Dialog dialog = builder.create();
+            dialog.show();
+        }else if(bundle.getString("category").equalsIgnoreCase("Black&White") ||
+                bundle.getString("category").equalsIgnoreCase("Florida") ||
+                bundle.getString("category").equalsIgnoreCase("Virgin Mojito")) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.BWAlertDialogTheme);
+            builder.setTitle("Add Item");
+            builder.setMessage("Are you sure?");
+            builder.setIcon(R.mipmap.ic_launcher);
+            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    state = databaseHelper.insertItems(bundle.getString("category"), "", itemSelected.getPrice());
+                    if (state == true) {
+                        notification.setVisibility(View.VISIBLE);
+                        comTextView.setText(itemSelected.getTitle() + " Added!");
+                        notification.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                notification.setVisibility(View.GONE);
+
+                            }
+                        }, 2000);
+                    } else {
+                        notification.setVisibility(View.VISIBLE);
+                        comTextView.setText("Error!!!");
+                        comTextView.setTextColor(Color.RED);
+                        notification.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                notification.setVisibility(View.GONE);
+
+                            }
+                        }, 2000);
+                    }
+                }
+            });
+            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Toast.makeText(Availables.this, itemSelected.getTitle(), Toast.LENGTH_SHORT).show();
                     dialog.cancel();
                 }
             });

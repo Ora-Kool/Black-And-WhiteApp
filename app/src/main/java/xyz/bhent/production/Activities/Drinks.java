@@ -49,7 +49,10 @@ public class Drinks extends Activity {
         String selectedItem = tempValues.getTitle();
         if(selectedItem.equalsIgnoreCase("Cocktails (avec alcool)") ||
                 selectedItem.equalsIgnoreCase("Cocktails (sans Alcool)") ||
-                selectedItem.equalsIgnoreCase("Cocktails Eteki")){
+                selectedItem.equalsIgnoreCase("Cocktails Eteki")||
+                selectedItem.equalsIgnoreCase("Vin Blanc")||
+                selectedItem.equalsIgnoreCase("Cocktails Eteki")||
+                selectedItem.equalsIgnoreCase("Vin Rouge")){
             bundle.putString("cocktails", selectedItem);
             Intent advanceIntent = new Intent(Drinks.this, AdvancedCocktail.class);
             advanceIntent.putExtras(bundle);

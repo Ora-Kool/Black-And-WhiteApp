@@ -23,7 +23,7 @@
         android:id="@+id/item_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:singleLine="true"
+        android:singleLine="false"
         android:layout_toRightOf="@+id/item_image"
         android:textColor="@android:color/black"
         android:layout_marginTop="26dp"

@@ -19,115 +19,137 @@ public class Data {
             "Bieres",
             "Liqueurs",//has three columns
             "Cocktails (avec alcool)",
-            "Cocktails (sans Alcool)",//left out
+            "Cocktails (sans Alcool)",
             "Rhum",//has 3 columns
             "Vodka",//has 3 columns
             "Cognac",//has 3 columns
             "Whisky",//has 3 columns
-            "Cocktails Eteki",//left out
-            "Vin Rouge", //has 2columns
-            "Vin Blanc", // has 2 columns
+            "Cocktails Eteki",
+            "Vin Rouge",
+            "Vin Blanc",
             "Rose",
             "Vin Mousseux",
             "Champagnes"
     };
     //subcategories for oissons Chaudes
-    public static HashMap<String, Integer> BChaudes() {
-        HashMap<String, Integer> tempList = new HashMap<>();
-        tempList.put("Café", 1500);
-        tempList.put("Thé", 1500);
+    public static HashMap<String, String> BChaudes() {
+        HashMap<String, String> tempList = new HashMap<>();
+        tempList.put("Café", "1,500");
+        tempList.put("Thé", "1,500");
         return tempList;
     }
 
     //subcategories for Boissons Froides
-    public static HashMap<String, Integer> BFroides(){
-        HashMap<String, Integer> tempList = new HashMap<>();
-        tempList.put("Tangui PM",1000);
-        tempList.put("Menthe à Eau",1500);
-        tempList.put("Grenadine à Eau",1500);
-        tempList.put("Jus Naturel",1500);
-        tempList.put("Diabolo(Sprite + Menthe)",2000);
-        tempList.put("Perrier PM",2000);
-        tempList.put("Menthe au Lait",2500);
+    public static HashMap<String, String> BFroides(){
+        HashMap<String, String> tempList = new HashMap<>();
+        tempList.put("Tangui PM","1,000");
+        tempList.put("Menthe à Eau", "1,500");
+        tempList.put("Grenadine à Eau","1,500");
+        tempList.put("Jus Naturel", "1,500");
+        tempList.put("Diabolo(Sprite + Menthe)","2,000");
+        tempList.put("Perrier PM","2,000");
+        tempList.put("Menthe au Lait","2,500");
 
         return tempList;
     }
 
     //subcategories for Boissons Gazeuzes (sans alcool)
-    public static HashMap<String, Integer> BGsansAlcol(){
-        HashMap<String, Integer> tempList = new HashMap<>();
-        tempList.put("Coca Cola",1500 );
-        tempList.put("Coca Light", 1500);
-        tempList.put("Coca Zero", 1500);
-        tempList.put("Sprite", 1500);
-        tempList.put("Fanta", 1500);
-        tempList.put("Schweppes Soda", 1500);
-        tempList.put("Schweppes Tonic", 1500);
-        tempList.put("Orangina", 1500);
+    public static HashMap<String, String> BGsansAlcol(){
+        HashMap<String, String> tempList = new HashMap<>();
+        tempList.put("Coca Cola","1,500");
+        tempList.put("Coca Light", "1,500");
+        tempList.put("Coca Zero", "1,500");
+        tempList.put("Sprite", "1,500");
+        tempList.put("Fanta", "1,500");
+        tempList.put("Schweppes Soda", "1,500");
+        tempList.put("Schweppes Tonic", "1,500");
+        tempList.put("Orangina", "1,500");
 
         return tempList;
     }
 
     //subcategories for Boissons Energétiques
-    public static HashMap<String, Integer> BEnerge(){
-        HashMap<String, Integer> tempList = new HashMap<>();
-        tempList.put("Eteki Classique",2000);
-        tempList.put("Eteki Wildberry", 2000);
-        tempList.put("Red Bull", 2000);
-        tempList.put("Malta Guinness", 2000);
+    public static HashMap<String, String> BEnerge(){
+        HashMap<String, String> tempList = new HashMap<>();
+        tempList.put("Eteki Classique","2,000");
+        tempList.put("Eteki Wildberry", "2,000");
+        tempList.put("Red Bull", "2,000");
+        tempList.put("Malta Guinness", "2,000");
 
         return tempList;
     }
 
     //subcategories for Boissons Gazeuzes (avec alcool)
-    public static HashMap<String, Integer> BEngeAlc(){
-        HashMap<String, Integer> tempList = new HashMap<>();
-        tempList.put("Smirnoff Ice Black",2000);
+    public static HashMap<String, String> BEngeAlc(){
+        HashMap<String, String> tempList = new HashMap<>();
+        tempList.put("Smirnoff Ice Black","2,000");
 
         return tempList;
     }
 
     //subcategories for Bieres
-    public static HashMap<String, Integer> Bieres(){
-        HashMap<String, Integer> tempList = new HashMap<>();
-        tempList.put("33 Export",2000);
-        tempList.put("Beaufort Light",2000);
-        tempList.put("Castel",2000);
-        tempList.put("Heineken",2000);
-        tempList.put("Guinness",2000);
-        tempList.put("Tango",2500);
+    public static HashMap<String, String> Bieres(){
+        HashMap<String, String> tempList = new HashMap<>();
+        tempList.put("33 Export","2,000");
+        tempList.put("Beaufort Light", "2,000");
+        tempList.put("Castel","2,000");
+        tempList.put("Heineken","2,000");
+        tempList.put("Guinness", "2,000");
+        tempList.put("Tango", "2,500");
 
         return tempList;
     }
 
+    //Subcategory for Vin Rouge
+    public static HashMap<String, String> Vrouge(){
+        HashMap<String, String> arrayList = new HashMap<>();
+        arrayList.put("Merlot", "(Verre and Bottle)");//two price verre and bottle
+        arrayList.put("Medoc", "(Bottle)");
+        arrayList.put("Cabernet Sauvignon Cavior", "(Bottle)");
+        arrayList.put("Haut-Medoc", "(Bottle)");
+
+        return arrayList;
+    }
+
+    //Subcategory for Vin blanc
+    public static HashMap<String, String> vinBlanc(){
+        HashMap<String, String> map = new HashMap<>();
+        map.put("Chardonnay","(Verre and Bottle)");
+        map.put("Sauvignon","(Bottle)");
+        map.put("Chardonnay \"Sweet\" Cavior","(Bottle)");
+
+        return map;
+    }
+
+
 
 
     //subcategories for Rose
-    public static HashMap<String, Integer> RoseSub(){
-        HashMap<String, Integer> tempList = new HashMap<>();
-        tempList.put("Côte de Provence",17500);
+    public static HashMap<String, String> RoseSub(){
+        HashMap<String, String> tempList = new HashMap<>();
+        tempList.put("Côte de Provence (bottle)", "17,500");
 
         return tempList;
     }
 
     //subcategories for Vin Mousseux
-    public static HashMap<String, Integer> VinMous(){
-        HashMap<String, Integer> tempList = new HashMap<>();
-        tempList.put("Prosecco",15000);
-        tempList.put("JP Chenet",15000);
+    public static HashMap<String, String> VinMous(){
+        HashMap<String, String> tempList = new HashMap<>();
+        tempList.put("Prosecco (bottle)","15,000");
+        tempList.put("JP Chenet (bottle)", "15,000");
 
         return tempList;
     }
 
     //subcategories for Champagnes
-    public static HashMap<String, Integer> Champs(){
-        HashMap<String, Integer> tempList = new HashMap<>();
-        tempList.put("Moet Brut",45000);
-        tempList.put("Moet Nectar",60000);
-        tempList.put("Veuve Clicquot",60000);
-        tempList.put("Ruinart Blanc",70000);
-        tempList.put("Dom Pérignon",150000);
-        tempList.put("Champagne Cristal",225000);
+    public static HashMap<String, String> Champs(){
+        HashMap<String, String> tempList = new HashMap<>();
+        tempList.put("Moet Brut (bottle)", "45,000");
+        tempList.put("Moet Nectar (bottle)", "60,000");
+        tempList.put("Veuve Clicquot (bottle)", "60,000");
+        tempList.put("Ruinart Blanc (bottle)", "70,000");
+        tempList.put("Dom Pérignon (bottle)", "150,000");
+        tempList.put("Champagne Cristal (bottle)", "225,000");
 
         return tempList;
     }
@@ -174,14 +196,7 @@ public class Data {
         return tempList;
     }
 
-    //subcategory of Americano
-    public static HashMap<String, Integer> americano(){
-        HashMap<String, Integer> tempAmericano = new HashMap<>();
-        tempAmericano.put("Martini rouge",5000);
-        tempAmericano.put("Campari",5000);
-        tempAmericano.put("Soda", 5000);
-        return tempAmericano;
-    }
+
 
 
 
